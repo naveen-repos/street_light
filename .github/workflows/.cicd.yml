@@ -33,5 +33,5 @@ jobs:
         run: npm install
 
       - name: eslit check
-        run:  eslit .
+        run:  eslint .
 
