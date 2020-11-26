@@ -1,0 +1,119 @@
+openapi: "3.0.1"
+info:
+  title: "street_light_api"
+  description: "This is street_light_api  for demonstration purposes"
+  version: "2020-06-30T13:56:21Z"
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+x-amazon-apigateway-request-validator: all
+
+paths:
+  /pole:
+    post:
+      x-amazon-apigateway-integration:
+        uri: ${add_pole}
+        passthroughBehavior: never
+        timeoutInMillis: 29000
+        httpMethod: POST
+        type: aws_proxy
+        credentials: ${execution_role}
+      security:
+      - auth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/empty"
+
+    get:
+        x-amazon-apigateway-integration:
+          uri: ${get_poles}
+          passthroughBehavior: never
+          timeoutInMillis: 29000
+          httpMethod: POST
+          type: aws_proxy
+          credentials: ${execution_role}
+        responses:
+          "200":
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/empty"
+  /villages:
+     get:
+      x-amazon-apigateway-integration:
+        uri: ${get_villages}
+        passthroughBehavior: never
+        timeoutInMillis: 29000
+        httpMethod: POST
+        type: aws_proxy
+        credentials: ${execution_role}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/empty"
+
+  /pre_signed_url:
+    post:
+      parameters:
+        - name: "idToken"
+          in: "header"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/preSignedUrl"
+        required: true
+      x-amazon-apigateway-integration:
+        uri: ${pre_signed_urls}
+        passthroughBehavior: never
+        timeoutInMillis: 29000
+        httpMethod: POST
+        type: aws_proxy
+        credentials: ${execution_role}
+      security:
+        - auth: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/empty"
+
+components:
+  schemas:
+    preSignedUrl:
+      title: "pre_signed_url Schema"
+      required:
+        - "village"
+      type: "object"
+      properties:
+        village:
+          type: "string"
+    empty:
+      title: "the empty object"
+      type: "object"
+  
+  securitySchemes:
+      auth:
+        type: "apiKey"
+        name: "idToken"
+        in: "header"
+        x-amazon-apigateway-authtype: "cognito_user_pools"
+        x-amazon-apigateway-authorizer:
+          type: "cognito_user_pools"
+          providerARNs: ["${user_pool_arn}"]
+
+        
