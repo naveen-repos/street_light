@@ -26,12 +26,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
 
-      - name: Run a one-line script
-        run: echo Hello, world!
-
+      - name: loading the list of files
+        run:  ls -a
+        
       - name: instal node modules
         run: npm install
 
       - name: eslit check
-        run:  eslint .
+        run:  eslint -v
 
