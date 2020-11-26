@@ -25,12 +25,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
-
-      - name: loading the list of files
-        run:  ls -a
         
       - name: instal node modules
         run: npm install
+        
+      - name: loading the list of files
+        run:  ls -a
 
       - name: eslit check
         run:  eslint -v
