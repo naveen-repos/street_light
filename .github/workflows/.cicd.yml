@@ -28,10 +28,10 @@ jobs:
         
       - name: instal node modules
         run: npm install
-        
+
       - name: loading the list of files
         run:  ls -a
 
-      - name: eslit check
-        run:  eslint -v
+      - name: terraform plan
+        run:  terraform plan
 
