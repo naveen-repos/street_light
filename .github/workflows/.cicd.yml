@@ -32,3 +32,6 @@ jobs:
       - name: instal node modules
         run: npm install
 
+      - name: eslit check
+        run:  eslit .
+
