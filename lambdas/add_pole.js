@@ -98,9 +98,9 @@ exports.handler = async (event, context) => {
   const poleData = JSON.parse(event.body);
 
   try {
-    const userName = getUserFromEvent(event);
-    const { villageId } = poleData;
-    await checkVolunteerEligibility({ userName, villageId });
+    // const userName = getUserFromEvent(event);
+    // const { villageId } = poleData;
+    // await checkVolunteerEligibility({ userName, villageId });
     await addPoleToDb(poleData, userName, context);
   } catch (ex) {
     context.done(null, JSON.parse(ex.message));

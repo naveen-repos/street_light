@@ -19,8 +19,8 @@ paths:
         httpMethod: POST
         type: aws_proxy
         credentials: ${execution_role}
-      security:
-      - auth: []
+      # security:
+      # - auth: []
       responses:
         "200":
           description: OK
