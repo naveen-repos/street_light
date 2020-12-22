@@ -24,7 +24,7 @@ const buildSuccessResponse = (responseData) => {
   };
 };
 
-const addPoleToDb = async (poleData, userName, context) => {
+const addPoleToDb = async (poleData, context) => {
   try {
     const { villageId } = poleData;
     const params = {
@@ -34,7 +34,7 @@ const addPoleToDb = async (poleData, userName, context) => {
         SK: `POLE##${new Date().getTime()}`,
         poleId: `POLE##${new Date().getTime()}`,
         createdOn: Date.now(),
-        createdBy: userName,
+       // createdBy: userName,
         ...poleData,
       },
     };
@@ -101,7 +101,7 @@ exports.handler = async (event, context) => {
     // const userName = getUserFromEvent(event);
     // const { villageId } = poleData;
     // await checkVolunteerEligibility({ userName, villageId });
-    await addPoleToDb(poleData, userName, context);
+    await addPoleToDb(poleData, context);
   } catch (ex) {
     context.done(null, JSON.parse(ex.message));
   }
