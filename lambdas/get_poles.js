@@ -43,6 +43,8 @@ const getPoles = async (villageId) => {
     console.log(data.Items);
   return data;
 };
+  const getPowerConsumption=()=>{}  
+
 exports.handler = async (event, context) => {
   console.log(event);
      const {
