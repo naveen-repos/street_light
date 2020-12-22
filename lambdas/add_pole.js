@@ -48,51 +48,51 @@ const addPoleToDb = async (poleData, context) => {
   }
 };
 
-const checkVolunteerEligibility = async ({ userName, villageId }) => {
-  const params = {
-    TableName: TABLE_NAME,
-    Key: {
-      PK: "USER",
-      SK: `VOLUNTEER##${userName}`,
-    },
-  };
-  let userData = await ddb.get(params).promise();
-  console.log(userData);
-  if (Object.keys(userData).length === 0) {
-    throw Error(
-      JSON.stringify(
-        buildErrorResponse("USER_NOT_FOUND", "The user doesn't exists")
-      )
-    );
-  }
-  let user = userData.Item;
-  console.log(user);
-  if (!user.volunteerVillages.includes(villageId)) {
-    throw Error(
-      JSON.stringify(
-        buildErrorResponse(
-          "USER_NOT_AUTHORIZED",
-          "The user is not authorized to add poles to this village"
-        )
-      )
-    );
-  }
-};
+// const checkVolunteerEligibility = async ({ userName, villageId }) => {
+//   const params = {
+//     TableName: TABLE_NAME,
+//     Key: {
+//       PK: "USER",
+//       SK: `VOLUNTEER##${userName}`,
+//     },
+//   };
+//   let userData = await ddb.get(params).promise();
+//   console.log(userData);
+//   if (Object.keys(userData).length === 0) {
+//     throw Error(
+//       JSON.stringify(
+//         buildErrorResponse("USER_NOT_FOUND", "The user doesn't exists")
+//       )
+//     );
+//   }
+//   let user = userData.Item;
+//   console.log(user);
+//   if (!user.volunteerVillages.includes(villageId)) {
+//     throw Error(
+//       JSON.stringify(
+//         buildErrorResponse(
+//           "USER_NOT_AUTHORIZED",
+//           "The user is not authorized to add poles to this village"
+//         )
+//       )
+//     );
+//   }
+// };
 
-const getUserFromEvent = (event) => {
-  try {
-    const auth_claims = event.requestContext.authorizer.claims;
-    const userName = auth_claims["cognito:username"];
-    if (!userName) {
-      throw new Error("can't parse user name");
-    }
-    return userName;
-  } catch (ex) {
-    throw Error(
-      JSON.stringify(buildErrorResponse("AUTH_CLAIMS_NOT_FOUND", ex.message))
-    );
-  }
-};
+// const getUserFromEvent = (event) => {
+//   try {
+//     const auth_claims = event.requestContext.authorizer.claims;
+//     const userName = auth_claims["cognito:username"];
+//     if (!userName) {
+//       throw new Error("can't parse user name");
+//     }
+//     return userName;
+//   } catch (ex) {
+//     throw Error(
+//       JSON.stringify(buildErrorResponse("AUTH_CLAIMS_NOT_FOUND", ex.message))
+//     );
+//   }
+// };
 exports.handler = async (event, context) => {
   console.log(event);
   const poleData = JSON.parse(event.body);

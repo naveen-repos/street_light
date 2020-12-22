@@ -40,21 +40,19 @@ const getPoles = async (villageId) => {
   };
 
   let data = await ddb.query(params).promise();
-    console.log(data.Items);
+  console.log(data.Items);
   return data;
 };
-  const getPowerConsumption=()=>{}  
 
 exports.handler = async (event, context) => {
   console.log(event);
-     const {
-       queryStringParameters: {villageId}
-     } = event;
-    
+  const {
+    queryStringParameters: { villageId },
+  } = event;
 
   try {
-      const poles = await getPoles(villageId);
-   context.done(null, buildSuccessResponse(poles.Items));
+    const poles = await getPoles(villageId);
+    context.done(null, buildSuccessResponse(poles.Items));
   } catch (ex) {
     context.done(null, buildErrorResponse("SERVER_ERROR", ex));
   }

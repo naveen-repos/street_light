@@ -30,6 +30,12 @@ paths:
                 $ref: "#/components/schemas/empty"
 
     get:
+        parameters:
+          - name: "villageId"
+            in: "query"
+            required: true
+            schema:
+              type: "string"
         x-amazon-apigateway-integration:
           uri: ${get_poles}
           passthroughBehavior: never
